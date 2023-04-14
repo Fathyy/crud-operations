@@ -1,10 +1,10 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = sanitize_data($_POST['name']);
-    $address = sanitize_data($_POST['address']);
-    $phone = sanitize_data($_POST['phone']);
-    $salary = sanitize_data($_POST['salary']);
+    $name = ($_POST['name']);
+    $address = ($_POST['address']);
+    $phone = ($_POST['phone']);
+    $salary = ($_POST['salary']);
 
     require_once __DIR__ . '/config/database.php';
 
@@ -16,20 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    $stmt->bindParam(4, $salary, PDO::PARAM_STR); 
    $stmt->execute();
    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-   print_r($result);
-//    if ($result) {
-//     header('Location: index.php');
-//     exit;
-//    }
-
-}
-
-function sanitize_data($data)
-{
-    $data = trim($data);
-    $data = strip_tags($data);
-    $data = addslashes($data);
-    return $data;
+   
 }
 
 ?>
@@ -41,13 +28,13 @@ function sanitize_data($data)
     </div>
 
     <div>
-        <label for="phone">Phone</label>
-        <input type="phone" name="phone" id="phone">
+        <label for="address">Address</label>
+        <input type="text" name="address" id="address">
     </div>
 
     <div>
-        <label for="address">Address</label>
-        <input type="text" name="address" id="address">
+        <label for="phone">Phone</label>
+        <input type="phone" name="phone" id="phone">
     </div>
 
     <div>
