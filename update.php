@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once __DIR__ . '/config/database.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $name = $_POST['name'];
@@ -7,13 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
     $salary = $_POST['salary'];
 
-    require_once __DIR__ . '/config/database.php';
     $statement = $dbh->prepare("UPDATE users SET Name = '$name',
     Address = '$address', Phone = '$phone', Salary = '$salary'
     WHERE id = {$_GET['id']}");
     $statement->execute();
-    $result = $statement->fetch();
-    if ($result) {
+    $lastInsertId=$dbh->lastInsertId();
+    if ($lastInsertId){
         $_SESSION['message'] = "Profile successfully updated";
         header('Location: index.php');
         exit;
@@ -47,29 +47,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         endif;
         ?>
 
-        <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" name="name" id="name">
-            </div>
+        <?php
+        if (isset($_GET['id'])) {
+            $profile_id = $_GET['id'];
+            $statement = $dbh->prepare("SELECT * FROM 
+            users WHERE id = '$profile_id'");
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+            if ($result) :?>
+                
+                    <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" id="name" value="<?php echo $result['Name'] ?>">
+                </div>
 
-            <div class="mb-3">
-                <label for="address" class="form-label">Address</label>
-                <input type="text" class="form-control" name="address" id="address">
-            </div>
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" class="form-control" name="address" id="address" value="<?php echo $result['Address']?>">
+                </div>
 
-            <div class="mb-3">
-                <label for="phone" class="form-label">Phone</label>
-                <input type="phone" class="form-control" name="phone" id="phone">
-            </div>
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="phone" class="form-control" name="phone" id="phone" value="<?php echo $result['Phone']?>">
+                </div>
 
-            <div class="mb-3">
-                <label for="salary" class="form-label">Salary</label>
-                <input type="text" class="form-control" name="salary" id="salary">
-            </div>
+                <div class="mb-3">
+                    <label for="salary" class="form-label">Salary</label>
+                    <input type="text" class="form-control" name="salary" id="salary" value="<?php echo $result['Salary'] ?>">
+                </div>
 
-            <button type="submit" class="btn btn-primary">Create</button>
-        </form>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+            
+            <?php else : 
+                echo "No such record found"; ?>
+
+    <?php endif?>
+
+    <?php }
+    ?>
 </div>
 </div>
 <?php require_once __DIR__ . '/includes/footer.php';?>

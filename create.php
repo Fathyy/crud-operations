@@ -16,19 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
    $stmt->bindParam(3, $phone, PDO::PARAM_STR); 
    $stmt->bindParam(4, $salary, PDO::PARAM_STR); 
    $stmt->execute();
-   $result = $stmt->fetch();
-   if ($result) {
-    $_SESSION['message'] = "Profile successfully created";
-    header('Location: create.php');
-    exit;
+   $lastInsertId=$dbh->lastInsertId();
+    if ($lastInsertId){
+        $_SESSION['message'] = "Profile successfully created";
+        header('Location: create.php');
+        exit;
+    }
+
+    else {
+        $_SESSION['message'] = "Profile not successfully created";
+        header('Location: create.php');
+        exit;
+    
    }
-   else {
-    $_SESSION['message'] = "Profile not successfully created";
-    header('Location: create.php');
-    exit;
+   
    }
 
-}
+
 
 ?>
 <?php require_once __DIR__ . '/includes/header.php';
