@@ -12,10 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Address = '$address', Phone = '$phone', Salary = '$salary'
     WHERE id = {$_GET['id']}");
     $statement->execute();
-    $lastInsertId=$dbh->lastInsertId();
-    if ($lastInsertId){
+    $user = $statement->fetch();
+    if ($user){
         $_SESSION['message'] = "Profile successfully updated";
-        header('Location: index.php');
+        header('Location: update.php');
         exit;
        }
        else {
