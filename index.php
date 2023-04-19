@@ -46,11 +46,11 @@ endif;
         if (!empty($result)) {
             foreach ($result as $row) {?>
                <tr>
-               <td><?php echo $row['id'] ?></td> 
-                <td><?php echo $row['Name'] ?></td>
-                <td><?php echo $row['Address'] ?></td>
-                <td><?php echo $row['Phone'] ?></td>
-                <td><?php echo $row['Salary'] ?></td>
+               <td><?php echo htmlspecialchars($row['id'])?></td> 
+                <td><?php echo htmlspecialchars($row['Name']) ?></td>
+                <td><?php echo htmlspecialchars($row['Address']) ?></td>
+                <td><?php echo htmlspecialchars($row['Phone']) ?></td>
+                <td><?php echo htmlspecialchars($row['Salary'] )?></td>
                 <td><a href="update.php?id=<?php echo $row['id'] ?>"><i class="fa-regular fa-pen-to-square"></i></a>
                     <a href="delete.php?id=<?php echo $row['id']?>"><i class="fa-solid fa-trash"></i></a></td>
                </tr>

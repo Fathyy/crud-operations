@@ -59,22 +59,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" value="<?php echo $result['Name'] ?>">
+                    <input type="text" class="form-control" name="name" id="name" value="<?php echo htmlspecialchars($result['Name']) ?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" name="address" id="address" value="<?php echo $result['Address']?>">
+                    <input type="text" class="form-control" name="address" id="address" value="<?php echo htmlspecialchars($result['Address'])?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone</label>
-                    <input type="phone" class="form-control" name="phone" id="phone" value="<?php echo $result['Phone']?>">
+                    <input type="phone" class="form-control" name="phone" id="phone" value="<?php echo htmlspecialchars($result['Phone'])?>">
                 </div>
 
                 <div class="mb-3">
                     <label for="salary" class="form-label">Salary</label>
-                    <input type="text" class="form-control" name="salary" id="salary" value="<?php echo $result['Salary'] ?>">
+                    <input type="text" class="form-control" name="salary" id="salary" value="<?php echo htmlspecialchars($result['Salary'])?>">
                 </div>
 
                 <button type="submit" class="btn btn-primary">Create</button>
