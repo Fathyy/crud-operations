@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     Address = '$address', Phone = '$phone', Salary = '$salary'
     WHERE id = {$_GET['id']}");
     $statement->execute();
-    $user = $statement->fetch();
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
     if ($user){
         $_SESSION['message'] = "Profile successfully updated";
         header('Location: update.php');
@@ -25,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        }
 }
 ?>
-
 <?php require_once __DIR__ . '/includes/header.php'; ?>
 
 <div class="container">
