@@ -9,6 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     require_once __DIR__ . '/config/database.php';
 
+    // insering new user to DB query
    $stmt = $dbh->prepare("INSERT INTO users(Name, Address, Phone, Salary)
    VALUES(?, ?, ?, ?)"); 
    $stmt->bindParam(1, $name, PDO::PARAM_STR); 
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header('Location: create.php');
         exit;
    }
-   
+
    }
 
 ?>
@@ -41,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="index.php" class="float-end btn btn-primary">Back</a>
         </div>
 
+        <!-- BS alert if a new user is created -->
         <?php if(isset($_SESSION['message'])):?>
 
         <div class="alert alert-warning alert-dismissible fade show" role="alert">

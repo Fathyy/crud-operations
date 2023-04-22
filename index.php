@@ -15,8 +15,7 @@ $result = $statement->fetchAll();
 <a href="create.php" class="btn btn-primary"><i class="fa-solid fa-circle-plus" style="margin-right:3px;"></i>Create</a>
 </div>
 
-<!-- BS alert goes here -->
-
+<!-- BS alert if a user is updated-->
 <?php if(isset($_SESSION['message'])):?>
 
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -43,6 +42,7 @@ endif;
 
     <tbody>
         <?php
+        // retrieve all records from the DB
         if (!empty($result)) {
             foreach ($result as $row) {?>
                <tr>

@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $phone = $_POST['phone'];
     $salary = $_POST['salary'];
 
+    // Updating user query
     $statement = $dbh->prepare("UPDATE users SET Name = '$name',
     Address = '$address', Phone = '$phone', Salary = '$salary'
     WHERE id = {$_GET['id']}");
@@ -33,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h4 class="float-start">Profile Update page</h4>
             <a href="index.php" class="float-end btn btn-primary">Back</a>
         </div>
-
+        
+        <!-- BS alert when user is updated -->
         <?php if(isset($_SESSION['message'])):?>
 
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -46,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         endif;
         ?>
 
+        <!-- Show full existing user details from the DB before updating -->
         <?php
         if (isset($_GET['id'])) {
             $profile_id = $_GET['id'];
