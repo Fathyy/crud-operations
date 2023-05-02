@@ -33,9 +33,11 @@ endif;
       <tr>
         <th>#</th>
         <th>Name</th>
-        <th>Address</th>
+        <th>Email</th>
+        <th>City</th>
         <th>Phone</th>
         <th>Salary</th>
+        <th>Gender</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -48,14 +50,17 @@ endif;
                <tr>
                <td><?php echo htmlspecialchars($row['id'])?></td> 
                 <td><?php echo htmlspecialchars($row['Name']) ?></td>
-                <td><?php echo htmlspecialchars($row['Address']) ?></td>
+                <td><?php echo htmlspecialchars($row['Email']) ?></td>
+                <td><?php echo htmlspecialchars($row['City']) ?></td>
                 <td><?php echo htmlspecialchars($row['Phone']) ?></td>
-                <td><?php echo htmlspecialchars($row['Salary'] )?></td>
+                <td>Ksh <?php echo htmlspecialchars($row['Salary'] )?></td>
+                <td><?php echo htmlspecialchars($row['Gender']) ?></td>
                 <td>
                     <a href="update.php?id=<?php echo htmlspecialchars($row['id'])?>"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <a href="delete.php?id=<?php echo htmlspecialchars($row['id'])?>"><i class="fa-solid fa-trash"></i></a></td>
-               </tr>
-            
+                    <a href="delete.php?id=<?php echo htmlspecialchars($row['id'])?>"><i class="fa-solid fa-trash"></i></a>
+                    <a href="view.php?id=<?php echo htmlspecialchars($row['id'])?>"><i class="fa-regular fa-eye"></i></a>
+                </td>
+               </tr> 
         <?php }
         }?>
     </tbody>

@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $city = $_POST['city'];
     $phone = trim($_POST['phone']);
     $salary = trim($_POST['salary']);
+    $gender = $_POST['gender'];
 
     // sanitize and validate the email
     $sanitizeEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
@@ -33,12 +34,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($_SESSION['message'])) {
         // insering new user to DB query
-        $stmt = $dbh->prepare("INSERT INTO users(Name, Address, Phone, Salary)
-        VALUES(?, ?, ?, ?)"); 
+        $stmt = $dbh->prepare("INSERT INTO users(Name, Email, City, Phone, Salary, Gender)
+        VALUES(?, ?, ?, ?, ?, ?)"); 
         $stmt->bindParam(1, $name, PDO::PARAM_STR); 
-        $stmt->bindParam(2, $address, PDO::PARAM_STR); 
-        $stmt->bindParam(3, $phone, PDO::PARAM_STR); 
-        $stmt->bindParam(4, $salary, PDO::PARAM_STR); 
+        $stmt->bindParam(2, $email, PDO::PARAM_STR); 
+        $stmt->bindParam(3, $city, PDO::PARAM_STR); 
+        $stmt->bindParam(4, $phone, PDO::PARAM_STR); 
+        $stmt->bindParam(5, $salary, PDO::PARAM_STR); 
+        $stmt->bindParam(6, $gender, PDO::PARAM_STR); 
         $stmt->execute();
         $lastInsertId=$dbh->lastInsertId();
             if ($lastInsertId){
@@ -110,15 +113,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="mb-3">Choose your gender
-                <input type="radio" name="gender" id="male" value="email"/>
+                <input type="radio" name="gender" id="male" value="Male"/>
                 <label for="male">Male</label>
-                <input type="radio" name="gender" id="female" value="email" />
+                <input type="radio" name="gender" id="female" value="Female" />
                 <label for="female">Female</label>
             </div>
 
             <div class="mb-3">
                 <label for="agree">
-                    <input type="checkbox" name="agree" id="agree">
+                    <input type="checkbox" name="agree" id="agree" required>
                     I agree to the terms of services
                 </label>
             </div>
