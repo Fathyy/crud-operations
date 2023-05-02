@@ -3,26 +3,25 @@ session_start();
 require_once __DIR__ . '/config/database.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = $_POST['name'];
-    $address = $_POST['address'];
-    $phone = $_POST['phone'];
-    $salary = $_POST['salary'];
+    $name = trim($_POST['name']); 
+    $email = trim($_POST['email']);
+    $city = $_POST['city'];
+    $phone = trim($_POST['phone']);
+    $salary = trim($_POST['salary']);
+    $gender = $_POST['gender'];
 
     // Updating user query
     $statement = $dbh->prepare("UPDATE users SET Name = '$name',
-    Address = '$address', Phone = '$phone', Salary = '$salary'
+    Email = '$email', City = '$city', Phone = '$phone', Salary = '$salary',
+    Gender = '$gender'
     WHERE id = {$_GET['id']}");
     $statement->execute();
     $user = $statement->fetch(PDO::FETCH_ASSOC);
-    if ($user){
+    if ($user === true){
         $_SESSION['message'] = "Profile successfully updated";
-        header('Location: update.php');
-        exit;
        }
        else {
         $_SESSION['message'] = "Profile not successfully updated";
-        header('Location: update.php');
-        exit;
        }
 }
 ?>
@@ -47,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unset($_SESSION['message']);
         endif;
         ?>
-
         <!-- Show full existing user details from the DB before updating -->
         <?php
         if (isset($_GET['id'])) {
@@ -57,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $statement->execute();
             $result = $statement->fetch(PDO::FETCH_ASSOC);
             if ($result) :?>
-                
                     <form action="<?php htmlspecialchars($_SERVER['PHP_SELF'])?>" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
@@ -65,9 +62,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <input type="text" class="form-control" name="address" id="address" value="<?php echo htmlspecialchars($result['Address'])?>">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" class="form-control" name="email" id="email" value="<?php echo htmlspecialchars($result['Email']) ?>">
                 </div>
+
+                <div class="mb-3">
+                <label for="city" class="form-label">Choose your city</label>
+                <select name="city" id="city">
+                    <option value="<?php echo htmlspecialchars($result['City']) ?>">Nairobi</option>
+                    <option value="<?php echo htmlspecialchars($result['City']) ?>">Kisumu</option>
+                    <option value="<?php echo htmlspecialchars($result['City']) ?>">Mombasa</option>
+                </select>
+            </div>
 
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone</label>
@@ -79,7 +85,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" class="form-control" name="salary" id="salary" value="<?php echo htmlspecialchars($result['Salary'])?>">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Create</button>
+                <div class="mb-3">Choose your gender
+                <input type="radio" name="gender" id="male" value="<?php echo htmlspecialchars($result['Gender'])?>"/>
+                <label for="male">Male</label>
+                <input type="radio" name="gender" id="female" value="<?php echo htmlspecialchars($result['Gender'])?>"/>
+                <label for="female">Female</label>
+            </div>
+
+
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
             
             <?php else : 

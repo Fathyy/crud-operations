@@ -2,7 +2,7 @@
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $name = trim($_POST['name']); //trim them
+    $name = trim($_POST['name']); 
     $email = trim($_POST['email']);
     $city = $_POST['city'];
     $phone = trim($_POST['phone']);
@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // sanitize and validate the email
     $sanitizeEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
-    if (filter_var($sanitizeEmail, FILTER_VALIDATE_EMAIL) !== true) {
+    if (filter_var($sanitizeEmail, FILTER_VALIDATE_EMAIL) === false) {
         $_SESSION['message'] = "Invalid email format";
     }
 
@@ -96,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="mb-3">
                 <label for="city" class="form-label">Choose your city</label>
                 <select name="city" id="city">
+                    <option value="">--- Choose a city ---</option>
                     <option value="Nairobi">Nairobi</option>
                     <option value="Kisumu">Kisumu</option>
                     <option value="Kisumu">Mombasa</option>

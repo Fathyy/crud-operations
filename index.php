@@ -9,11 +9,12 @@ $result = $statement->fetchAll();
 ?>
 
 <div class="container">
-    <div class="row">
-        
+    <div class="row"> 
         <div class="my-4">
-<a href="create.php" class="btn btn-primary"><i class="fa-solid fa-circle-plus" style="margin-right:3px;"></i>Create</a>
-</div>
+            <h2 class="float-start">All Employee Records</h2>
+            <a href="create.php" class="btn btn-primary float-end"><i class="fa-solid fa-circle-plus" 
+            style="margin-right:3px;"></i>Create</a>
+        </div>
 
 <!-- BS alert if a user is updated-->
 <?php if(isset($_SESSION['message'])):?>
@@ -56,9 +57,17 @@ endif;
                 <td>Ksh <?php echo htmlspecialchars($row['Salary'] )?></td>
                 <td><?php echo htmlspecialchars($row['Gender']) ?></td>
                 <td>
-                    <a href="update.php?id=<?php echo htmlspecialchars($row['id'])?>"><i class="fa-regular fa-pen-to-square"></i></a>
-                    <a href="delete.php?id=<?php echo htmlspecialchars($row['id'])?>"><i class="fa-solid fa-trash"></i></a>
-                    <a href="view.php?id=<?php echo htmlspecialchars($row['id'])?>"><i class="fa-regular fa-eye"></i></a>
+                    <!-- Edit -->
+                    <a href="update.php?id=<?php echo htmlspecialchars($row['id'])?>" 
+                    data-bs-toggle="tooltip" data-bs-title="Edit Record"><i class="fa-regular fa-pen-to-square"></i></a>
+
+                    <!-- Delete Record -->
+                    <a href="delete.php?id=<?php echo htmlspecialchars($row['id'])?>"
+                    data-bs-toggle="tooltip" data-bs-title="Delete Record"><i class="fa-solid fa-trash"></i></a>
+
+                    <!-- View Record -->
+                    <a href="view.php?id=<?php echo htmlspecialchars($row['id'])?>"
+                    data-bs-toggle="tooltip" data-bs-title="View Record"><i class="fa-regular fa-eye"></i></a>
                 </td>
                </tr> 
         <?php }
