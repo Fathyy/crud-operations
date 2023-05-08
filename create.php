@@ -9,27 +9,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $salary = trim($_POST['salary']);
     $gender = $_POST['gender'];
 
-    // sanitize and validate the email
-    $sanitizeEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
-    if (filter_var($sanitizeEmail, FILTER_VALIDATE_EMAIL) === false) {
-        $_SESSION['message'] = "Invalid email format";
+    if (!$name || !$email || !$city || !$phone || !$salary || !$gender ) {
+        $_SESSION['message'] = "This field cannot be empty";  
     }
+    else {
+        // sanitize and validate the email
+        $sanitizeEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (filter_var($sanitizeEmail, FILTER_VALIDATE_EMAIL) === false) {
+            $_SESSION['message'] = "Invalid email format";
+        }
 
-    // the city field is not empty
-    if (filter_has_var(INPUT_POST, 'city') === false) {
-        $_SESSION['message'] = "Please select a city";
+        // the city field is not empty
+        if (filter_has_var(INPUT_POST, 'city') === false) {
+            $_SESSION['message'] = "Please select a city";
+        }
+
+        // check if gender radio button is checked
+        if (filter_has_var(INPUT_POST, 'gender') === false) {
+            $_SESSION['message'] = "Please select a gender";
+        }
+
+        // terms of service
+        if (filter_has_var(INPUT_POST, 'agree') === false) {
+            $_SESSION['message'] = "You must agree to the terms of service";
+        }
     }
-
-    // check if gender radio button is checked
-    if (filter_has_var(INPUT_POST, 'gender') === false) {
-        $_SESSION['message'] = "Please select a gender";
-    }
-
-    // terms of service
-    if (filter_has_var(INPUT_POST, 'agree') === false) {
-        $_SESSION['message'] = "You must agree to the terms of service";
-    }
-
+    
     require_once __DIR__ . '/config/database.php';
 
     if (empty($_SESSION['message'])) {
@@ -49,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('Location: create.php');
                 exit;
             }
-            else {
-                $_SESSION['message'] = "Profile not successfully created";
-                header('Location: create.php');
-                exit;
-        }
+        //     else {
+        //         $_SESSION['message'] = "Profile not successfully created";
+        //         header('Location: create.php');
+        //         exit;
+        // }
     }
 
    }
@@ -114,15 +119,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="mb-3">Choose your gender
+                <label for="male" style="display: block;">
                 <input type="radio" name="gender" id="male" value="Male"/>
-                <label for="male">Male</label>
-                <input type="radio" name="gender" id="female" value="Female" />
-                <label for="female">Female</label>
+                Male
+                </label>
+
+                <label for="female" style="display: block;">
+                <input type="radio" name="gender" id="female" value="Female"/>
+                Female
+                </label>
+                
             </div>
 
             <div class="mb-3">
                 <label for="agree">
-                    <input type="checkbox" name="agree" id="agree" required>
+                    <input type="checkbox" name="agree" id="agree">
                     I agree to the terms of services
                 </label>
             </div>
