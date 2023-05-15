@@ -54,11 +54,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 header('Location: create.php');
                 exit;
             }
-        //     else {
-        //         $_SESSION['message'] = "Profile not successfully created";
-        //         header('Location: create.php');
-        //         exit;
-        // }
     }
 
    }
